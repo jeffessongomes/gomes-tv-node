@@ -8,13 +8,14 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   name          String
-  email         String   @unique
+  lastname      String
+  email         String    @unique
   isAdmin       Boolean
   password_hash String
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  created_at    DateTime? @default(now())
+  updated_at    DateTime  @updatedAt
 
   @@map("users")
 }
@@ -30,10 +31,10 @@ model Movie {
   id   String @id @default(uuid())
   name String
 
-  description String
-  small_cover String
-  cover       String
-  age_group   Int
+  description String?
+  small_cover String  @default("without_cover")
+  cover       String?
+  age_group   Int?
 
   @@map("movies")
 }
