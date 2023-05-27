@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
+  id            String     @id @default(uuid())
   name          String
   lastname      String
-  email         String    @unique
+  email         String     @unique
   isAdmin       Boolean
   password_hash String
-  created_at    DateTime? @default(now())
-  updated_at    DateTime  @updatedAt
+  created_at    DateTime?  @default(now())
+  updated_at    DateTime   @updatedAt
+  Category      Category[]
 
   @@map("users")
 }
@@ -23,6 +24,10 @@ model User {
 model Category {
   id    String @id @default(uuid())
   title String
+
+  user   User    @relation(fields: [userId], references: [id])
+  userId String
+  Movie  Movie[]
 
   @@map("categories")
 }
@@ -35,6 +40,9 @@ model Movie {
   small_cover String  @default("without_cover")
   cover       String?
   age_group   Int?
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
 
   @@map("movies")
 }
